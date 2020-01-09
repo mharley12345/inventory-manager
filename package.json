@@ -1,0 +1,19 @@
+{
+  "name": "inventory-manager",
+  "version": "1.0.0",
+  "description": "A Basic React Inventory Management App",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn test or npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mharley12345/inventory-manager.git"
+  },
+  "author": "Mike Harley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mharley12345/inventory-manager/issues"
+  },
+  "homepage": "https://github.com/mharley12345/inventory-manager#readme"
+}
