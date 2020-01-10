@@ -4,7 +4,7 @@
   "description": "A Basic React Inventory Management App",
   "main": "index.js",
   "scripts": {
-    "test": "yarn test or npm run test"
+    "test": "yarn test || npm run test"
   },
   "repository": {
     "type": "git",

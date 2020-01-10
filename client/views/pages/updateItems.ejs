@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<% include ../partials/stylesheetLinks %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+<% include ../partials/header %>
+
+<% include ../partials/nav %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Update Stock
+        <small>Update the inventory.</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Update Stock</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="box box-primary">
+          <div>
+            <form role="form" id="updateItemForm">
+              <div class="box-body">   
+                <div class="form-group">
+                  <label>Select Item</label>
+                  <select class="form-control" style="width: 25%" required="required" name="selectItem" id="selectItem">
+                    <% items.forEach(function(item) { %>
+                      <option><%= item.name %></option>
+                    <% }); %>
+                  </select>
+
+                </div>
+
+                <div class="form-group" style="width: 25%">
+                  <label for="quantity">Quantity</label>
+                  <input type="number" class="form-control" id="quantity" name="quantity" placeholder="" required="required">
+                </div>
+<!--                 <div class="form-group">
+                  <label for="capture">OR Scan Barcode</label>
+                  <input type="file" accept="image/*" id="capture" capture="camera">
+                </div> -->
+              </div>
+                <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button id="add" class="btn btn-primary" width="25px">Add</button>
+                <button id="remove" class="btn btn-primary" width="25px">Remove</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>
+<!-- ./wrapper -->
+required
+<% include ../partials/scripts %>
+
+<script>
+
+
+
+var addButton = document.getElementById("add");
+addButton.onclick = function() {
+    $('#updateItemForm').validate({
+    rules: {
+      selectItem: {
+        required: true
+      },
+      quantity: {
+        required: true
+      }
+    },
+    submitHandler: function(form) {
+      var form = document.getElementById("updateItemForm");
+      var itemName = form.elements[0].value;
+      console.log(itemName);
+      var quantity = form.elements[1].value;
+      var id = JSON.parse('<%= id %>');
+      console.log(quantity);
+      $.ajax({
+        type: 'PUT',
+        dataType: "html",
+        url: '/api/daily_inventory/' + itemName,
+        data: { itemName: itemName, quantity: quantity, uid: id},
+        success: function (data) {
+          alert("The inventory has been updated!");
+          window.location.reload();
+        },
+        error: function (data) {
+          alert("Something went wrong, please try again later!")
+        }
+      });
+    }
+  });
+}
+
+var removeButton = document.getElementById("remove");
+removeButton.onclick = function() {
+    $('#updateItemForm').validate({
+    rules: {
+      selectItem: {
+        required: true
+      },
+      quantity: {
+        required: true
+      }
+    },
+    submitHandler: function(form) {
+      var form = document.getElementById("updateItemForm");
+      var itemName = form.elements[0].value;
+      var quantity = -1 * form.elements[1].value;
+      var id = JSON.parse('<%= id %>');
+      $.ajax({
+          type: 'PUT',
+          dataType: "html",
+          url: '/api/daily_inventory/' + itemName,
+          data: { itemName: itemName, quantity: quantity, uid: id},
+          success: function (data) {
+            alert("The inventory has been updated!");
+            window.location.reload();
+          },
+          error: function (data) {
+            alert("Something went wrong, please try again later!")
+          }
+      });
+    }
+  });
+}
+
+
+// // // // // // // // // // // // // // // //
+
+  // $('#updateItemForm').validate({
+  //   rules: {
+  //     selectItem: {
+  //       required: true
+  //     },
+  //     quantity: {
+  //       required: true
+  //     }
+  //   },
+  //   submitHandler: function(form) {
+  //     submitUpdateItemForm();
+  //   }
+  // });
+
+  // function submitUpdateItemForm() {
+    
+  //   var addButton = document.getElementById("add");
+  //   addButton.onclick = function() {
+  //     var form = document.getElementById("updateItemForm");
+  //     var itemName = form.elements[0].value;
+  //     console.log(itemName);
+  //     var quantity = form.elements[1].value;
+  //     var id = JSON.parse('<%= id %>');
+  //     console.log(quantity);
+  //     $.ajax({
+  //       type: 'PUT',
+  //       url: '/api/daily_inventory/' + itemName,
+  //       data: { itemName: itemName, quantity: quantity, uid: id}
+  //     });
+  //   }
+
+  //   var removeButton = document.getElementById("remove");
+  //   removeButton.onclick = function() {
+  //     var form = document.getElementById("updateItemForm");
+  //     var itemName = form.elements[0].value;
+  //     var quantity = -1 * form.elements[1].value;
+  //     var id = JSON.parse('<%= id %>');
+  //     $.ajax({
+  //         type: 'PUT',
+  //         url: '/api/daily_inventory/' + itemName,
+  //         data: { itemName: itemName, quantity: quantity, uid: id},
+  //       });
+  //   }
+  // }
+
+
+
+
+  // function submitUpdateItemForm() {
+  //   var form = document.getElementById("updateItemForm");
+  //   var itemName = form.elements[0].value;
+  //   var quantity = form.elements[1].value;
+  //   var id = JSON.parse('<%= id %>');
+    
+  //   $.ajax({
+  //     type: 'PUT',
+  //     url: '/api/daily_inventory/' + itemName,
+  //     data: { itemName: itemName, quantity: quantity, uid: id }
+  //   });
+  //   alert("The inventory has been updated!");
+  // });
+
+
+
+</script>
+
+</body>
+</html>
+
